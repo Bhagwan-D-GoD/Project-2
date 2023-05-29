@@ -3,11 +3,19 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Login & Signup Form | CodingNepal</title>
-    <link rel="stylesheet" href=" {% static 'style.css' %}"">
+    <title>Personal Finance Assistant</title>
+    <link rel="stylesheet" href=" {% static 'style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    {{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
     <div class="wrapper">
       <div class="title-text">
         <div class="title login">Login</div>
@@ -52,7 +60,7 @@
               <input type="password" placeholder="Password" name="password" required>
             </div>
             <div class="field">
-              <input type="password" placeholder="Confirm password" name="confirm_passwod" required>
+              <input type="password" placeholder="Confirm password" name="confirm_password" required>
             </div>
             <div class="field btn">
               <div class="btn-layer"></div>
