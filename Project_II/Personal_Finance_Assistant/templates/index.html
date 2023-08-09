@@ -8,6 +8,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
+    {% if form.errors %}
+          <div class="popup" id="popup" >
+              <ul>
+                  {% for field in form %}
+                      {% if field.errors %}
+                          <li>{{ field.label }}: {{ field.errors|join:", " }}</li>
+                      {% endif %}
+                  {% endfor %}
+                  <button type="button" onclick="closePopup()">ok</button>
+              </ul>
+          </div>
+      {% endif %}
     <div class="wrapper">
       <div class="title-text">
         <div class="title login">Login</div>
@@ -22,12 +34,13 @@
           <div class="slider-tab"></div>
         </div>
         <div class="form-inner">
-          <form action="#" class="login">
+          <form action="{% url 'login' %}" method='POST' class="login">
+            {% csrf_token %}
             <div class="field">
-              <input type="text" placeholder="User-ID" required>
+              {{ form.username }}
             </div>
             <div class="field">
-              <input type="password" placeholder="Password" required>
+              {{ form.password1 }}
             </div>
             <div class="pass-link"><a href="#">Forgot password?</a></div>
             <div class="field btn">
@@ -36,27 +49,26 @@
             </div>
             <div class="signup-link">Not a member? <a href="">Signup now</a></div>
           </form>
-          <form action="#" class="signup">
+          <form action="{% url 'signin' %}" method ="POST" class="signup" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="field">
-              <input type="text" placeholder="Name" required>
+                {{ form.username }}
             </div>
             <div class="field">
-              <input type="text" placeholder="Use-ID" required>
+                {{ form.email }}
             </div>
             <div class="field">
-              <input type="text" placeholder="Email Address" required>
+              {{ form.password1 }}
             </div>
             <div class="field">
-              <input type="password" placeholder="Password" required>
-            </div>
-            <div class="field">
-              <input type="password" placeholder="Confirm password" required>
+                {{ form.password2 }}
             </div>
             <div class="field btn">
               <div class="btn-layer"></div>
               <input type="submit" value="Signup">
             </div>
           </form>
+          
         </div>
       </div>
     </div>
@@ -79,7 +91,8 @@
         signupBtn.click();
         return false;
       });
-    </script>
 
+
+    </script>
   </body>
 </html>

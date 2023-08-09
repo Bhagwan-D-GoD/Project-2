@@ -3,50 +3,47 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.shortcuts import render,redirect
 from django.contrib.auth.hashers import make_password,check_password
-from django.contrib.auth import authenticate 
+from django.contrib.auth import authenticate,login
+from django.contrib.auth.decorators import login_required
+from .form import SignUpForm
 from.models import User_Info
 # Create your views here.
 
-def index(request):
-    return(render(request,"index.html"))
 
-def register(request):
-    if request.method == 'POST':
+def signin(request):
         try:
-            name = request.POST.get("name")
-            u_id = request.POST.get("user_id")
-            email = request.POST.get("email")
-            password = request.POST.get("password")
-            confirm_password = request.POST.get("confirm_password")
-            if User_Info.objects.filter(user_id=u_id).exists():
-                messages.error(request,"user already exists")
-                return redirect('index') 
-            if password != confirm_password:
-                print("Password does not match")
-                messages.error(request,"Password does not match")
-                return(redirect('index'))
-            password = make_password(password) #to encrpt the password 
-            newaccount = User_Info()
-            newaccount.user_name = name
-            newaccount.user_id = u_id
-            newaccount.password = password
-            newaccount.email = email
-            newaccount.save()
-            messages.success(request,"Account created sucessfully!")
+            form = SignUpForm()
+            if request.method == "POST":
+                form = SignUpForm(request.POST)   
+                if form.is_valid():
+                    form.save()
+                    messages.success(request,"Account created sucessfully!")
+                    return redirect("index")
+                
+            context = {'form':form}
+            return render(request,'index.html',context)
         except IndexError:
             return redirect("index")
-    return(render(request,"index.html"))
 
-def login(request):
+def log_in(request):
     try:
         if request.method =="POST":
-            u_id = request.POST.get("user_id")
-            pass_word = request.POST.get("password")
-            if User_Info.objects.filter(user_id=u_id).exists():
-                user = User_Info.objects.get(user_id=u_id)
-                if check_password(pass_word,user.password):#compares plain password and hashed password
-                    return(HttpResponse('welcome to our site'))
-            messages.error(request,"Invalid Username or Password")
-            return(redirect('index'))
+            u_id = request.POST.get("username")
+            pass_word = request.POST.get("password1")
+            user = authenticate(request, username=u_id, password=pass_word)
+        if user is not None:
+            login(request, user)
+            return redirect('landing')  # Change 'home' to the appropriate URL name
+        messages.error(request,"Invalid Username or Password")
+        return(redirect('index'))
     except:
-        return redirect(index)
+        return redirect('index')
+
+@login_required(login_url='index')
+def landing(request):
+    return render(request,'landingpage.html')
+
+def navbar(request):
+    return render(request,'reusablenavbar.html')
+    
+    

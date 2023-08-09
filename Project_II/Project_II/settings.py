@@ -76,8 +76,8 @@ WSGI_APPLICATION = 'Project_II.wsgi.application'
 
 DATABASES = {
     'default': {
-         "ENGINE": 'django.db.backends.mysql',
-        "NAME": "FinanceData",
+        "ENGINE": 'django.db.backends.mysql',
+        "NAME": "financeData",
         "USER": "Project2",
         "PASSWORD": "PersonalFinanceApp",
         "HOST": "127.0.0.1",
