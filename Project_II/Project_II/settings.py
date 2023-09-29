@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Personal_Finance_Assistant'
+    'Personal_Finance_Assistant',
+    'import_export',
 ]
 
 MIDDLEWARE = [
@@ -77,7 +78,7 @@ WSGI_APPLICATION = 'Project_II.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": 'django.db.backends.mysql',
-        "NAME": "financeData",
+        "NAME": "financedata",
         "USER": "Project2",
         "PASSWORD": "PersonalFinanceApp",
         "HOST": "127.0.0.1",

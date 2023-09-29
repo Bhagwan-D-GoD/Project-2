@@ -60,7 +60,7 @@ nav.open .sidebar {
   display: flex;
   height: 100%;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: normal;
   padding: 30px 16px;
 }
 .sidebar-content .list {
