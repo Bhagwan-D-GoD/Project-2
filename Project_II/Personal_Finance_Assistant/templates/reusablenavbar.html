@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <title>Sidebar Menu | Side Navigation Bar</title>
-    <link rel="stylesheet" href= {% static 'reusablenavbar.css' %} />
+    <link rel="stylesheet" href= '{% static "reusablenavbar.css" %}'>
     <link
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
       rel="stylesheet"
@@ -60,30 +60,38 @@
           </div>
         </div>
       </div>
-    </nav>
-    {% block content %}
-    <input type= "submit">
-      {% endblock %}
-
-    <section class="overlay">
       
-    </section>
+    </nav>
+
+      <section class="overlay"></section>
+    <div class="overlay-content">
+      {% block content %}
+      <h1>This is the heading
+
+      </h1>
+      {% endblock %}
+    </div>
+   
     
 
     <script>
         const navBar = document.querySelector("nav"),
        menuBtns = document.querySelectorAll(".menu-icon"),
        overlay = document.querySelector(".overlay");
+       overlayContent = overlay.querySelector(".overlay-content"); // Select the content within the overlay
 
      menuBtns.forEach((menuBtn) => {
        menuBtn.addEventListener("click", () => {
          navBar.classList.toggle("open");
+         overlay.style.display = "block"; // Show the overlay when a menu icon is clicked
        });
      });
 
      overlay.addEventListener("click", () => {
        navBar.classList.remove("open");
+       overlay.style.display = "none"; // Hide the overlay when it's clicked
      });
+     overlay.style.display = "block";
     </script>
   </body>
 </html>

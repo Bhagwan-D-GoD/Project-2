@@ -7,6 +7,17 @@
   box-sizing: border-box;
   font-family: "Poppins", sans-serif;
 }
+
+:root{
+  /* colors */
+  --body-color :#e3f2fd;
+
+  /*transition*/
+  --trans-02 :all 0.2s ease;
+  --trans-03 :all 0.3s ease;
+  --trans-04 :all 0.4s ease;
+  --trans-05 :all 0.5s ease;
+}
 body {
   min-height: 100%;
   background: #e3f2fd;
@@ -52,6 +63,7 @@ nav .sidebar {
   background-color: #fff;
   box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
+  z-index: 100;
 }
 nav.open .sidebar {
   left: 0;
@@ -92,18 +104,39 @@ nav.open .sidebar {
   color: #fff;
 }
 .overlay {
+  display: none;
   position: fixed;
   top: 0;
   left: -100%;
   height: 1000vh;
-  width: 200%;
+  width: 100%;
   opacity: 0;
   pointer-events: none;
   transition: all 0.4s ease;
   background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
 }
 nav.open ~ .overlay {
-  opacity: 1;
+ 
+  opacity: 100;
   left: 260px;
   pointer-events: auto;
+}
+nav.close ~ .overlay{
+  opacity: 100;
+  left: 88px;
+  width: calc(100% - 88px);
+}
+.overlay-content {
+  
+  position: relative;
+  left: 55%;
+  top: 55%;
+  transform: translate(-50%,-50%);
+  display: flex;
+  height: 100%;
+  flex-direction: column;
+  justify-content: normal;
+  padding: 30px 16px;
+  z-index: -100;
 }
