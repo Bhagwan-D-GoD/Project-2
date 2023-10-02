@@ -46,4 +46,4 @@ def landing(request):
 def navbar(request):
     return render(request,'reusablenavbar.html')
     
-    
+   
