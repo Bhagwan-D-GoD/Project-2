@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'Personal_Finance_Assistant',
-    'import_export',
 ]
 
 MIDDLEWARE = [

@@ -39,7 +39,7 @@ def log_in(request):
     except:
         return redirect('index')
 
-@login_required(login_url='index')
+
 def landing(request):
     return render(request,'landingpage.html')
 
