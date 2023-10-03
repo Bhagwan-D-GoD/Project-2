@@ -1,94 +1,75 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" /> 
+    <title>Personal Finance Assistant</title>
+    <link rel="stylesheet" href='{% static "reusablenavbar.css" %}' />
+    <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-   <title>Sidebar Menu | Side Navigation Bar</title>
-    <link rel="stylesheet" href= '{% static "reusablenavbar.css" %}'>
-    <link
-      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    {%block title%}
-          {% endblock title %}
   </head>
   <body>
-    <nav>
-      <div class="logo">
-        <i class="bx bx-menu menu-icon"></i>
-        <span class="logo-name">Personal Finance Assistant</span>
+    <div class="sidebar">
+      <div class="logo-details">
+        <i class="bx bx-money icon" ></i>
+        <div class="logo_name">Personal Finance Assistant</div>
+        <i class="bx bx-menu" id="btn"></i>
       </div>
-      <div class="sidebar">
-        <div class="logo">
-          <i class="bx bx-menu menu-icon"></i>
-          <span class="logo-name">Personal Finance Assistant</span>
-        </div>
+      <ul class="nav-list">
 
-        <div class="sidebar-content">
-          <ul class="lists">
-            <li class="list">
-              <a href="#" class="nav-link">
-                <i class="bx bx-home-alt icon"></i>
-                <span class="link">Home</span>
-              </a>
-            </li>
-            <li class="list">
-              <a href="#" class="nav-link">
-                <i class="bx bx-bar-chart-alt-2 icon"></i>
-                <span class="link">Income & Expenses</span>
-              </a>
-            <li class="list">
-              <a href="#" class="nav-link">
-                <i class="bx bx-pie-chart-alt-2 icon"></i>
-                <span class="link">Analytics</span>
-              </a>
-          </ul>
-
-          <div class="bottom-cotent">
-            <li class="list">
-              <a href="#" class="nav-link">
-                <i class="bx bx-cog icon"></i>
-                <span class="link">Settings</span>
-              </a>
-            </li>
-            <li class="list">
-              <a href="#" class="nav-link">
-                <i class="bx bx-log-out icon"></i>
-                <span class="link">Logout</span>
-              </a>
-            </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-grid-alt"></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+          <span class="tooltip">Dashboard</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-user"></i>
+            <span class="links_name">User</span>
+          </a>
+          <span class="tooltip">User</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-pie-chart-alt-2"></i>
+            <span class="links_name">Analytics</span>
+          </a>
+          <span class="tooltip">Analytics</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-wallet"></i>
+            <span class="links_name">Income & Expenses</span>
+          </a>
+          <span class="tooltip">Income & Expenses</span>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-cog"></i>
+            <span class="links_name">Settings</span>
+          </a>
+          <span class="tooltip">Settings</span>
+        </li>
+        <li class="profile">
+          <div class="profile-details">
+            <img src="profile.jpg" alt="profileImg" />
+            <div class="name_job">
+              <div class="name">Prem Shahi</div>
+              <div class="job">Web designer</div>
+            </div>
           </div>
-        </div>
-      </div>
+          <i class="bx bx-log-out" id="log_out"></i>
+        </li>
+      </ul>
+    </div>
+    <section class="home-section">
+      <div class="text">Dashboard </div>
+      {% block content %}{% endblock content %}
       
-    </nav>
+    </section>
 
-      <section class="overlay"></section>
-      {%block content%}
-          {% endblock content %}
-   
-    
-
-    <script>
-        const navBar = document.querySelector("nav"),
-       menuBtns = document.querySelectorAll(".menu-icon"),
-       overlay = document.querySelector(".overlay");
-       overlayContent = overlay.querySelector(".overlay-content"); // Select the content within the overlay
-
-     menuBtns.forEach((menuBtn) => {
-       menuBtn.addEventListener("click", () => {
-         navBar.classList.toggle("open");
-         overlay.style.display = "block"; // Show the overlay when a menu icon is clicked
-       });
-     });
-
-     overlay.addEventListener("click", () => {
-       navBar.classList.remove("open");
-       overlay.style.display = "none"; // Hide the overlay when it's clicked
-     });
-     overlay.style.display = "block";
-    </script>
+    <script src="{% static "script.js" %}"></script>
   </body>
 </html>
