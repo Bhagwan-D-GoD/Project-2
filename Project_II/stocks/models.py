@@ -1,3 +1,5 @@
 from django.db import models
+from Personal_Finance_Assistant.models import User_Info as uinfo
 
-# Create your models here.
+class portfolio(models.Model):
+    

@@ -11,6 +11,8 @@
       href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
       rel="stylesheet"
     />
+    {%block title%}
+          {% endblock title %}
   </head>
   <body>
     <nav>
@@ -64,10 +66,8 @@
     </nav>
 
       <section class="overlay"></section>
-    <div class="overlay-content">
-      {% block content %}
-      {% endblock %}
-    </div>
+      {%block content%}
+      {% endblock content %}
    
     
 
