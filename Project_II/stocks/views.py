@@ -18,6 +18,31 @@ def stock_data(request):
     return render(request, 'stock_data.html', context)
 
 
-def porfolio(request):
+
+
+
+
+
+
+########################for form#################
+from .form import addstockform
+def addstockform_view(request):
+    form=addstockform();
+    if request.method=='POST':
+        form=addstockform(request.POST)
+        if form.is_valid():
+            form.save()
+    context={"form":form}
+    return render (request,"allstock.html",context)        
     
-    return render(request,'portfolio.html')
+    
+    
+    
+
+
+###########################for portfolio #############
+from .models import stockportfolio
+def portfolio(request):
+    if request.session.has_key('session_username'):
+        data=stockportfolio.objects.filter(user_id=2)
+        return render(request,'portfolio.html',{'data':data})

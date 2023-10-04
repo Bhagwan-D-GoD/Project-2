@@ -8,4 +8,4 @@ class User_Info(models.Model):
     password = models.CharField(max_length=10000)
     
     def __str__(self):
-        return self.user_id
+        return self.user_name

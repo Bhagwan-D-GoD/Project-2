@@ -32,6 +32,7 @@ def log_in(request):
             pass_word = request.POST.get("password1")
             user = authenticate(request, username=u_id, password=pass_word)
         if user is not None:
+            request.session['session_username']=u_id
             login(request, user)
             return redirect('landing')  # Change 'home' to the appropriate URL name
         messages.error(request,"Invalid Username or Password")
@@ -41,7 +42,10 @@ def log_in(request):
 
 
 def landing(request):
-    return render(request,'landingpage.html')
+    if request.session.has_key('session_username'):
+        return render(request,'landingpage.html')
+    else:
+        return redirect('login')
 
 def navbar(request):
     return render(request,'reusablenavbar.html')
