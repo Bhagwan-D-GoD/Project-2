@@ -27,6 +27,7 @@ urlpatterns = [
      path('land/',views.landing ,name="landing"),
      path('signin/',views.signin ,name="signin"),
      path('navbar/',views.navbar ,name="navbar"),
+     path('income_expenses/',views.income_expenses ,name="income_expenses"),
     
 ]
 
