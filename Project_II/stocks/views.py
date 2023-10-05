@@ -66,7 +66,6 @@ def addstockform_view(request):
 ###########################for portfolio #############
 def portfolio(request):
     uname=request.session.get('username')
-<<<<<<< HEAD
     # for adding the stocks
     if request.method=='POST':
             form=addstockform(request.POST)
@@ -130,33 +129,7 @@ def portfolio(request):
     else:
         message="NO Data To Show. Please Add Your Stocks"
         return render(request,'portfolio.html',{'form':form,'message':message})
-=======
-    user_instance=User.objects.get(username=uname)
-    portfoliostock=stockportfolio()
-    portfoliostock.user=User.objects.get(username=uname)
-    realuser=portfoliostock.user
-    item= stockportfolio.objects.filter(user=realuser)
-    for symbol in item:
-        stock_symbol=symbol.stocksymbol
-        stock=yf.Ticker(stock_symbol)
-        price = stock.history(period="1d")["Close"].iloc[0]
-        #symbol.current_price=price
-        stockportfolio.objects.filter(user=realuser,stocksymbol=stock_symbol).update(current_price=price)
-        
-    for symbol in item:
-        buysum=0
-        buyindividual=symbol.buy_price*symbol.quantity
-        buysum+=buyindividual
-        currentsum=0
-        currentindividual=symbol.current_price*symbol.quantity
-        currentsum+=currentindividual
-    data=stockportfolio.objects.filter(user_id=user_instance)
-    if buysum>currentsum:
-        amount=buysum-currentsum;
-        content='Total loss'
-    else:
-        amount=currentsum-buysum
-        content='Total Profit'
-    return render(request,'portfolio.html',{'data':data,'amount':amount,'content':content})
->>>>>>> 6ec8649e563751c36e88a20abc0f88bf8be60559
+
+
+    
         
