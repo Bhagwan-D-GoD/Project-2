@@ -5,7 +5,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Personal Finance Assistant</title>
-    <link rel="stylesheet" href='{% static "reusablenavbar.css" %}' />
+    <link rel="stylesheet" href='{% static "base.css" %}' />
     <link href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {%block title %}
@@ -28,11 +28,11 @@
           <span class="tooltip">Home</span>
         </li>
         <li>
-          <a href="#">
+          <a href="{%url 'portfolio' %}">
             <i class="bx bx-user"></i>
-            <span class="links_name">User</span>
+            <span class="links_name">Portfolio</span>
           </a>
-          <span class="tooltip">User</span>
+          <span class="tooltip">Portfolio</span>
         </li>
         <li>
           <a href="#">
@@ -69,9 +69,9 @@
     </div>
     <section class="home-section">
       <div class="text"> {% block page_name %}{% endblock page_name %}</div>
-      <div class="text">Dashboard </div>
       {% block content %}
       {% endblock content %}
+
       
     </section>
     {% block script %}{% endblock script %}
