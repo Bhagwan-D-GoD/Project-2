@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'Personal_Finance_Assistant'
+    'Personal_Finance_Assistant',
+    'stocks',
 ]
 
 MIDDLEWARE = [
@@ -77,13 +78,18 @@ WSGI_APPLICATION = 'Project_II.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": 'django.db.backends.mysql',
-        "NAME": "financeData",
+        "NAME": "financedata",
         "USER": "Project2",
         "PASSWORD": "PersonalFinanceApp",
         "HOST": "127.0.0.1",
         "PORT": "3306", 
     }
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# In settings.py
+SESSION_COOKIE_AGE = 3600  # Set to 1 hour (in seconds)
+
 
 
 # Password validation
