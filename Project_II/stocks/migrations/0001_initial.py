@@ -8,9 +8,9 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-        ('Personal_Finance_Assistant', '0003_alter_user_info_email'),
-    ]
+    #dependencies = [
+      #  ('Personal_Finance_Assistant', '0003_alter_user_info_email'),
+    #]
 
     operations = [
         migrations.CreateModel(

@@ -86,6 +86,11 @@ DATABASES = {
     }
 }
 
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# In settings.py
+SESSION_COOKIE_AGE = 3600  # Set to 1 hour (in seconds)
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

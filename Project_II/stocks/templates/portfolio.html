@@ -55,6 +55,11 @@
         tr:nth-child(even) {
             background-color: #f2f2f2;
         }
+        .form{
+            padding: 600px;
+            border-collapse: collapse;
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +73,8 @@
                     <th>Stock Symbol</th>
                     <th>Stock Name</th>
                     <th>Quantity</th>
+                    <th>Buy Price</th>
+                    <th>Current Price</th>
                 </tr>
             </thead>
             <tbody>
@@ -77,13 +84,21 @@
                         <td>{{stock.stocksymbol}}</td>
                         <td>{{stock.stockname}}</td>
                         <td>{{stock.quantity}}</td>
+                        <td>{{stock.buy_price}}</td>
+                        <td>{{stock.current_price}}</td>
                     </tr>
                     {%endfor%}
+                    <tr>
+                        <td colspan="5">{{content}}={{amount}}</td>
+                    </tr>
                 </tr>
-                
-                <!-- Add more rows for other stocks -->
             </tbody>
         </table>
+    </div>>
+    <div class="addingstock">
+        <a href="{% url 'formdata' %}">
+        <span class="form">Add new stocks</span>
+        </a>
     </div>
 </body>
 </html>

@@ -1,6 +1,16 @@
-<p>Hello </p>
-<form action="" method="post">
-    {% csrf_token %}
-    {{form}}
-    <input type="submit" value="submit">
-</form>
+{%load static%}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Adding a stock</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1>Add stocks</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
