@@ -3,16 +3,18 @@
 {%block title %}
 <link rel="stylesheet" href= '{% static "income_expenses.css" %}'>
 {% endblock title %}
+
+{% block page_name %}Income & Expenses{% endblock page_name %}
 {% block content %}
 <div class = 'container'>
   <div class = 'income'>
   <h1>Total Income</h1>
-  <h3>10000</h3>
+  <h3>{{income}}</h3>
   </div>
 
   <div class = 'expenditure'>
     <h1>Total Expenditure</h1>
-    <h3>10000</h3>
+    <h3>{{expenditure}}</h3>
     </div>
 </div>
 <button class="button-71" role="button" id ='showFormButton'>Add Income & Expenses</button>
@@ -29,14 +31,14 @@
         </form>
         <button id="closeFormButton" class='form-button' role='button' style='background-color:red'>Close</button>
     </div>
-    <div class="table-container"></div>
     <table class="styled-table">
         <thead>
             <tr>
                 <th class="highlight">Title</th>
                     <th class="highlight">Amount</th>
                     <th class="highlight">Category</th>
-                    <th class="highlight">Finance</th>
+                    <th class="highlight">Remarks</th>
+                    <th class="highlight">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -46,6 +48,9 @@
                 <td>${{ income.amount }}</td>
                 <td>{{ income.category }}</td>
                 <td>{{ income.finance }}</td>
+                <td>
+                    <butto id = "btn7"><a href="{% url 'delete_income_expenses' income.pk %}">Delete</a> </button><!-- Link to delete view  income.pk is the primary key created by deafult-->
+                </td>
             </tr>
         {% empty %}
             <tr>
@@ -54,7 +59,6 @@
         {% endfor %}
         </tbody>
     </table>
-</div>
 {%endblock%}
 {% block script %}
  <script>
