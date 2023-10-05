@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Personal_Finance_Assistant',
     'stocks',
-    'stockanalysis',
+    'stockanalysis'
 ]
 
 MIDDLEWARE = [
@@ -86,11 +86,6 @@ DATABASES = {
         "PORT": "3306", 
     }
 }
-
-SESSION_ENGINE = 'django.contrib.sessions.backends.db'
-# In settings.py
-SESSION_COOKIE_AGE = 3600  # Set to 1 hour (in seconds)
-
 
 
 # Password validation

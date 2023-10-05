@@ -13,7 +13,6 @@ def chart_view(request):
 
     # Convert the figure to HTML
     chart_div = fig.to_html(full_html=False)
-    
     return render(request, 'chart.html', {'chart_div': chart_div})
 
 
