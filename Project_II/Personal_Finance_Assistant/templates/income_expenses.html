@@ -31,7 +31,6 @@
         </form>
         <button id="closeFormButton" class='form-button' role='button' style='background-color:red'>Close</button>
     </div>
-    <div class="table-container"></div>
     <table class="styled-table">
         <thead>
             <tr>
@@ -60,9 +59,8 @@
         {% endfor %}
         </tbody>
     </table>
-</div>
 {%endblock%}
- {% block script %}
+{% block script %}
  <script>
   const showFormButton = document.getElementById("showFormButton");
   const formContainer = document.getElementById("formContainer");
@@ -86,10 +84,10 @@
   });
   
   // Prevent form submission (you can handle form submission as needed)
-  {% comment %} document.querySelector("form").addEventListener("submit", (e) => {
-      e.preventDefault();
-      alert("Form submitted!");
-  }); {% endcomment %}
+  document.querySelector("form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    alert("Form submitted!");
+    }); 
 
  </script>
 
