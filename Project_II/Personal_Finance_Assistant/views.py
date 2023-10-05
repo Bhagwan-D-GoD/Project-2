@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib import messages
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password,check_password
 from django.contrib.auth import authenticate,login
 from django.contrib.auth.decorators import login_required
 from .form import SignUpForm,TransactionForm
 from .models import IncomeRecord
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -63,18 +64,54 @@ def income_expenses(request):
                     incomerecord.title = form.cleaned_data['title']
                     incomerecord.amount = form.cleaned_data['amount']
                     incomerecord.finance = form.cleaned_data['finance_type']
+                    print("pass")
                     incomerecord.save()
                     messages.success(request,"Data Stored sucessfully!")
-                    return redirect("income_expenses")
+                    #for transfering income expense form and icome expense data to template
+                    # print(request.session.get('username'))
+                    user_instance = User.objects.get(username=uname)
+                    income_data = IncomeRecord.objects.filter(user=user_instance) #to get the user instance
+                    # to calculate the income and expenditure
+                    # Calculate the total income 
+                    total_income = IncomeRecord.objects.filter(user=request.user, finance='Income').aggregate(total=Sum('amount'))['total']
+                    total_expenditure = IncomeRecord.objects.filter(user=request.user, finance='Expenditure').aggregate(total=Sum('amount'))['total']
+                    context = {'form':form,
+                       'income_data':income_data,
+                       'income':total_income,
+                       'expenditure':total_expenditure}
+                    redirect("income_expenses")
             #for transfering income expense form and icome expense data to template
            # print(request.session.get('username'))
             user_instance = User.objects.get(username=uname)
-            
             income_data = IncomeRecord.objects.filter(user=user_instance) #to get the user instance
-            print(income_data)
+            # to calculate the income and expenditure
+            # Calculate the total income 
+            total_income = IncomeRecord.objects.filter(user=request.user, finance='Income').aggregate(total=Sum('amount'))['total']
+            total_expenditure = IncomeRecord.objects.filter(user=request.user, finance='Expenditure').aggregate(total=Sum('amount'))['total']
             context = {'form':form,
-                       'income_data':income_data}
+                       'income_data':income_data,
+                       'income':total_income,
+                       'expenditure':total_expenditure}
             return render(request,'income_expenses.html',context)
-    except IndexError:
+    except Exception as e:
             return redirect("index")
+        
+def delete_income(request, pk):
+    income_record = get_object_or_404(IncomeRecord, pk=pk)
+
+    # Check if the logged-in user is the owner of the income record
+    if income_record.user == request.user:
+        income_record.delete()
+
+    # Redirect to the income list page
+    return redirect('income_expenses')
     
+#defining logout function 
+def logout(request):
+    try:
+        del request.session['username']
+        messages.success(request,"You are logged out.")
+        return(redirect("index"))
+    except BaseException as e:
+            messages.error(request,repr(e))
+            return redirect("index")

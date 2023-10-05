@@ -20,11 +20,11 @@
       <ul class="nav-list">
 
         <li>
-          <a href="#">
+          <a href="{% url "landing" %}">
             <i class="bx bx-grid-alt"></i>
-            <span class="links_name">Dashboard</span>
+            <span class="links_name">Home</span>
           </a>
-          <span class="tooltip">Dashboard</span>
+          <span class="tooltip">Home</span>
         </li>
         <li>
           <a href="#">
@@ -54,20 +54,20 @@
           </a>
           <span class="tooltip">Settings</span>
         </li>
-        <li class="profile">
-          <div class="profile-details">
-            <img src="profile.jpg" alt="profileImg" />
-            <div class="name_job">
-              <div class="name">Prem Shahi</div>
-              <div class="job">Web designer</div>
-            </div>
-          </div>
-          <i class="bx bx-log-out" id="log_out"></i>
+        <li>
+          <a href="{% url "logout" %}">
+            <i class="bx bx-log-out" id="log_out"></i>
+            <span class="links_name">LogOut</span>
+          </a>
+          <span class="tooltip">LogOut</span>
+        </li>
+        
+          
         </li>
       </ul>
     </div>
     <section class="home-section">
-      <div class="text">Dashboard </div>
+      <div class="text"> {% block page_name %}{% endblock page_name %}</div>
       {% block content %}{% endblock content %}
       
     </section>

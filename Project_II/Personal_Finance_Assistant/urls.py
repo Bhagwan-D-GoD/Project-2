@@ -27,7 +27,9 @@ urlpatterns = [
      path('land/',views.landing ,name="landing"),
      path('signin/',views.signin ,name="signin"),
      path('navbar/',views.navbar ,name="navbar"),
+     path('logout/',views.logout ,name="logout"),
      path('income_expenses/',views.income_expenses ,name="income_expenses"),
+    path('delete_income_expenses/<int:pk>/', views.delete_income, name='delete_income_expenses'),
     
 ]
 
