@@ -24,4 +24,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('Personal_Finance_Assistant.urls')),
     path('',include('stocks.urls')),
+    path('',include('stockanalysis.urls')),
 ]
