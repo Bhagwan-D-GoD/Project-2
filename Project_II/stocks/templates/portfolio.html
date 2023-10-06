@@ -15,6 +15,7 @@
                 <th class="highlight">Quantity</th>
                 <th class="highlight">Buy Price</th>
                 <th class="highlight">Current Price</th>
+                <th class="highlight">Action</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,9 @@
                 <td>{{ stock.quantity }}</td>
                 <td>{{ stock.buy_price }}</td>
                 <td>{{ stock.current_price }}</td>
+                <td>
+                    <butto id = "btn7"><a href="{% url 'delete_portfolio' stock.pk %}">Delete</a> </button><!-- Link to delete view  income.pk is the primary key created by deafult-->
+                </td>
             </tr>
             {% endfor %}
             <tr>

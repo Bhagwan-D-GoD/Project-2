@@ -121,13 +121,13 @@ def filterstocks(request):
                 try:
                     stock_info=stock.info
                     pe_ratio = stock_info.get('trailingPE', None)
-                    pb_ratio = stock_info.get('trailingPB', None)
-                    price = stock_info.get('regularMarketPrice', None)
-                    if (pe_ratio is not None and pb_ratio is not None and price is not None and
+                    # pb_ratio = stock_info.get('trailingPB', None)
+                    price = stock_info.get('regularMarketPreviousClose', None)
+                    if (pe_ratio is not None  and price is not None and
                         min_pe_ratio <= pe_ratio <= max_pe_ratio and
-                        min_pb_ratio <= pb_ratio <= max_pb_ratio and
                         min_price <= price <= max_price):
                         filtered_stock.append(stock_info)
+                        print(price)
                 except Exception as e:
                     pass
             return render(request,'screener.html', {'filtered_stock': filtered_stock})
