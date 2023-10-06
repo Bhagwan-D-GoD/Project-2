@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Personal_Finance_Assistant',
     'stocks',
-    'stockanalysis'
+    'stockanalysis',
 ]
 
 MIDDLEWARE = [
