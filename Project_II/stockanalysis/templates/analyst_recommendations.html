@@ -1,0 +1,15 @@
+<!-- templates/stocks/analyst_recommendations.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Analyst Recommendations for {{ symbol }}</title>
+</head>
+<body>
+    <h1>Analyst Recommendations for {{ symbol }}</h1>
+    <div id="recommendations">
+        {{ analyst_recommendations|safe }}
+    </div>
+</body>
+</html>
