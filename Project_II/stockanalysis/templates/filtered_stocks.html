@@ -1,0 +1,17 @@
+<!-- templates/filtered_stocks.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Filtered Stocks</title>
+</head>
+<body>
+    <h1>Filter stocks</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    
+</body>
+</html>
