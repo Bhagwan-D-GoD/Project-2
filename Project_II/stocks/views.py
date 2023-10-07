@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -26,37 +26,6 @@ def stock_data(request):
 
 
 ########################for form#################
-def addstockform_view(request):
-    uname=request.session.get('username')
-    if request.session.has_key('username'):
-        uname=request.session.get('username')
-        form=addstockform();
-        if request.method=='POST':
-            form=addstockform(request.POST)
-        if form.is_valid():
-            portfoliostock=stockportfolio()
-            portfoliostock.user=User.objects.get(username=uname)
-            realuser=portfoliostock.user
-            stocksymbol = form.cleaned_data['stocksymbol']   
-            quantity = form.cleaned_data['quantity']   
-            buy_price = form.cleaned_data['buy_price']  
-            try:
-                item = stockportfolio.objects.filter(user=realuser).get(stocksymbol=stocksymbol)
-                item.quantity += quantity
-                item.save()
-            except stockportfolio.DoesNotExist:
-                portfoliostock = stockportfolio(
-                    stocksymbol=stocksymbol,
-                    quantity=quantity,
-                    buy_price=buy_price,
-                    user=User.objects.get(username=uname)
-                )
-                portfoliostock.save()
-            return redirect("portfolio")
-        content={
-            'form':form,
-        }    
-        return render(request,'allstock.html',content)
     
     
     
@@ -74,6 +43,7 @@ def portfolio(request):
                 portfoliostock.user=User.objects.get(username=uname)
                 realuser=portfoliostock.user
                 stocksymbol = form.cleaned_data['stocksymbol']   
+                stockname = form.cleaned_data['stockname']
                 quantity = form.cleaned_data['quantity']   
                 buy_price = form.cleaned_data['buy_price']  
                 try:
@@ -84,6 +54,7 @@ def portfolio(request):
                 except stockportfolio.DoesNotExist:
                     portfoliostock = stockportfolio(
                         stocksymbol=stocksymbol,
+                        stockname = stockname,
                         quantity=quantity,
                         buy_price=buy_price,
                         user=User.objects.get(username=uname)
@@ -110,11 +81,13 @@ def portfolio(request):
         #symbol.current_price=price
             stockportfolio.objects.filter(user=user_instance,stocksymbol=stock_symbol).update(current_price=price)
     # to identify profit or loss   
+        buysum=0
+        currentsum=0
         for symbol in item:
-            buysum=0
+            
             buyindividual=symbol.buy_price*symbol.quantity
             buysum+=buyindividual
-            currentsum=0
+            
             currentindividual=symbol.current_price*symbol.quantity
             currentsum+=currentindividual
         data=stockportfolio.objects.filter(user_id=user_instance)
@@ -132,4 +105,13 @@ def portfolio(request):
 
 
     
+def delete_portfolio(request, pk):
+    income_record = get_object_or_404(stockportfolio, pk=pk)
+
+    # Check if the logged-in user is the owner of the income record
+    if income_record.user == request.user:
+        income_record.delete()
+
+    # Redirect to the income list page
+    return redirect('portfolio')
         

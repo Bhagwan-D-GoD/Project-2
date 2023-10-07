@@ -57,7 +57,7 @@ def stock_chart_real(request):
     previous_close = sp500_data['Close'].iloc[-2] # Close price of the previous day
     traded_volume = sp500_data['Volume'].iloc[-1]  # Volume of shares traded today
     percentage_change = ((current_price - previous_close) / previous_close) * 100
-    #percentage_change=2
+    # percentage_change=-2
     fig2.update_layout(
         title='S&P 500 Index Chart',
         xaxis_title='Date',
@@ -99,8 +99,6 @@ def filterstocks(request):
             max_price = form.cleaned_data['max_price']
             min_pe_ratio = form.cleaned_data['min_pe_ratio']
             max_pe_ratio = form.cleaned_data['max_pe_ratio']
-            min_pb_ratio=form.cleaned_data['min_pb_ratio']
-            max_pb_ratio=form.cleaned_data['max_pb_ratio']
             sp500_symbols=sp500_stocks = [
                     'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'FB',  # Technology
                     'JPM', 'BAC', 'WFC', 'C', 'GS',  # Financials
@@ -121,13 +119,13 @@ def filterstocks(request):
                 try:
                     stock_info=stock.info
                     pe_ratio = stock_info.get('trailingPE', None)
-                    pb_ratio = stock_info.get('trailingPB', None)
-                    price = stock_info.get('regularMarketPrice', None)
-                    if (pe_ratio is not None and pb_ratio is not None and price is not None and
+                    # pb_ratio = stock_info.get('trailingPB', None)
+                    price = stock_info.get('regularMarketPreviousClose', None)
+                    if (pe_ratio is not None  and price is not None and
                         min_pe_ratio <= pe_ratio <= max_pe_ratio and
-                        min_pb_ratio <= pb_ratio <= max_pb_ratio and
                         min_price <= price <= max_price):
                         filtered_stock.append(stock_info)
+                        print(price)
                 except Exception as e:
                     pass
             return render(request,'screener.html', {'filtered_stock': filtered_stock})
