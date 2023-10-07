@@ -12,10 +12,10 @@
 {% endblock page_name %}
 
 {% block content %}
-
-<form method="post" action="{% url 'stockchart' %}">
+{% comment %} debug {% endcomment %}
+<form method="POST" action="{% url 'streamlit' %}">
     {% csrf_token %}
-    <input type="text" name="query" id="searchstock" placeholder="Enter stock symbol">
+    <input type="text" name="stock_name" id="searchstock" placeholder="Enter stock symbol">
     <button type="submit">Search</button>
 </form>
 <h1>Market Summary</h1>

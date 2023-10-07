@@ -1,6 +1,40 @@
 <!-- streamlit_page.html -->
 
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{%block title %}
+<title>Stocks Prediction</title>
+<link rel="stylesheet" href= '{% static "streamlit_page.css" %}'>
+
+{% endblock title%}
+    
+{% block page_name %}Stocks Prediction
+
+{% endblock page_name %}
+
+{% block content %}
+<iframe src="http://localhost:8501?{{query}}" width="1800" height="900" style = 'align-items:center'></iframe>
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
 <html>
 <head>
     <title>Streamlit Page</title>
@@ -9,4 +43,4 @@
     <h1>Stock prediction</h1>
     <iframe src="http://localhost:8501" width="1800" height="900"></iframe>
 </body>
-</html>
+</html> {% endcomment %}

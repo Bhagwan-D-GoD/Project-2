@@ -6,6 +6,7 @@ from .utils import get_plot
 import pandas as pd
 import plotly.express as px
 from .forms import searchform
+import subprocess,os
 
 
 
@@ -139,23 +140,26 @@ def filterstocks(request):
             
             
             
-            
-                        
-#################################################
-#analyst recommendation
-
-#def stock_analyst_recommendations(request):
-#   symbol='AAPL'
- #   stock = yf.Ticker(symbol)
-  #  analyst_recommendations = stock.recommendations
-  #  context = {
-       # 'symbol': symbol,
-       # 'analyst_recommendations': analyst_recommendations.to_html(),
-   # }
-   # return render(request, 'analyst_recommendations.html', context)
- 
  
  
 #################################
 def streamlit_page(request):
-    return render(request,'streamlit_page.html')     
+    return render(request,'streamlit_page.html')    
+
+
+
+# to run streamlit app from the same django project as a subprocess
+def stock_analysis_view(request):
+    if request.method == 'POST':
+        print("PAASS")
+        stock_name = request.POST.get('stock_name')
+        script_path = os.path.abspath('/stockanalysis/streamlit_app.py')
+        print(script_path)
+        if stock_name:
+            print(stock_name)
+            # Run the Streamlit app as a subprocess and pass the stock_name
+            subprocess.Popen(["streamlit", "run", script_path, stock_name])
+        else:
+            return render(request, 'stock_analysis_form.html', {'error_message': 'Invalid stock name'})
+    return render(request, 'stock_chart_real.html')
+ 
