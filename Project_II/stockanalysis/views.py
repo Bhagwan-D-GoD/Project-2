@@ -153,4 +153,9 @@ def filterstocks(request):
        # 'analyst_recommendations': analyst_recommendations.to_html(),
    # }
    # return render(request, 'analyst_recommendations.html', context)
-   
+ 
+ 
+ 
+#################################
+def streamlit_page(request):
+    return render(request,'streamlit_page.html')     
