@@ -6,7 +6,8 @@ from .utils import get_plot
 import pandas as pd
 import plotly.express as px
 from .forms import searchform
-
+import subprocess,os
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -19,7 +20,9 @@ from .forms import searchform
 # views.py
 import plotly.graph_objs as go
 
-def stock_chart_real(request):
+
+@login_required(login_url='index')
+def landing(request):
     symbol=None
     if request.method=='POST':
         symbol=request.POST.get('query')
@@ -87,10 +90,11 @@ def stock_chart_real(request):
              "traded_volume":traded_volume,
              "percentage_change":percentage_change,
              }
-    return render (request, "stock_chart_real.html", context)
+    return render (request, "landingpage.html", context)
 
 #############################################################
 #form ###
+@login_required(login_url='index')
 def filterstocks(request):
     if request.method =='POST':
         form=searchform(request.POST)
@@ -135,22 +139,15 @@ def filterstocks(request):
             'form':form,
         }  
             
-    return render(request,'filtered_stocks.html',content)
+    return render(request,'filter_stocks.html',content)
             
             
             
-            
-                        
-#################################################
-#analyst recommendation
+ 
+ 
+#################################
+@login_required(login_url='index')
+def streamlit_page(request):
+    return render(request,'streamlit_page.html')    
 
-#def stock_analyst_recommendations(request):
-#   symbol='AAPL'
- #   stock = yf.Ticker(symbol)
-  #  analyst_recommendations = stock.recommendations
-  #  context = {
-       # 'symbol': symbol,
-       # 'analyst_recommendations': analyst_recommendations.to_html(),
-   # }
-   # return render(request, 'analyst_recommendations.html', context)
-   
+

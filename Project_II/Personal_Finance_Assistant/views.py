@@ -4,9 +4,9 @@ from django.contrib import messages
 from django.shortcuts import render,redirect,get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password,check_password
-from django.contrib.auth import authenticate,login
+from django.contrib.auth import authenticate,login,update_session_auth_hash
 from django.contrib.auth.decorators import login_required
-from .form import SignUpForm,TransactionForm
+from .form import SignUpForm,TransactionForm,CustomPasswordChangeForm
 from .models import IncomeRecord
 from django.db.models import Sum
 
@@ -28,6 +28,7 @@ def signin(request):
         except IndexError:
             return redirect("index")
 
+
 def log_in(request):
     try:
         if request.method =="POST":
@@ -43,13 +44,13 @@ def log_in(request):
     except:
         return redirect('index')
 
-
+@login_required(login_url='index')
 def landing(request):
     return render(request,'landingpage.html')
 
-def navbar(request):
-    return render(request,'reusablenavbar.html')
-    
+
+
+@login_required(login_url='index')    
 def income_expenses(request):
     try:
             #print(request.session.get('username'))
@@ -64,7 +65,6 @@ def income_expenses(request):
                     incomerecord.title = form.cleaned_data['title']
                     incomerecord.amount = form.cleaned_data['amount']
                     incomerecord.finance = form.cleaned_data['finance_type']
-                    print("pass")
                     incomerecord.save()
                     messages.success(request,"Data Stored sucessfully!")
                     #for transfering income expense form and icome expense data to template
@@ -95,7 +95,7 @@ def income_expenses(request):
             return render(request,'income_expenses.html',context)
     except Exception as e:
             return redirect("index")
-        
+@login_required(login_url='index')       
 def delete_income(request, pk):
     income_record = get_object_or_404(IncomeRecord, pk=pk)
 
@@ -105,13 +105,32 @@ def delete_income(request, pk):
 
     # Redirect to the income list page
     return redirect('income_expenses')
+
+#to change password
+@login_required(login_url='index')
+def settings(request):
+
+            form = CustomPasswordChangeForm(request.user)
+            if request.method == "POST":
+                form = CustomPasswordChangeForm(request.user,request.POST)   
+                if form.is_valid():
+                    user=form.save()
+                    update_session_auth_hash(request, user)
+                    logout(request)
+                    messages.success(request,"Password changed sucessfully!")
+                    return redirect("index")
+                
+            context = {'form':form}
+            return render(request,'settings.html',context)
+    # except :
+    #     return redirect("index")
     
 #defining logout function 
+
 def logout(request):
     try:
-        del request.session['username']
-        messages.success(request,"You are logged out.")
+        request.session.clear()
+        logout(request)
         return(redirect("index"))
     except BaseException as e:
-            messages.error(request,repr(e))
             return redirect("index")
