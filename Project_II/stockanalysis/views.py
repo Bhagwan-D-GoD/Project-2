@@ -101,7 +101,7 @@ def filterstocks(request):
             max_pe_ratio = form.cleaned_data['max_pe_ratio']
             min_pb_ratio=form.cleaned_data['min_pb_ratio']
             max_pb_ratio=form.cleaned_data['max_pb_ratio']
-            sp500_symbols=sp500_stocks = [
+            sp500_symbols = [
                     'AAPL', 'MSFT', 'GOOGL', 'AMZN', 'FB',  # Technology
                     'JPM', 'BAC', 'WFC', 'C', 'GS',  # Financials
                     'PG', 'KO', 'PEP', 'MCD', 'CL',  # Consumer Staples
@@ -113,23 +113,21 @@ def filterstocks(request):
                     'UNH', 'CVS', 'ANTM', 'AET', 'CI',  # Health Insurance
                     'VZ', 'T', 'TMUS', 'CCI', 'SBAC'  # Telecommunications
     # Add more as needed
-                     ]
+                     ]         
 
             filtered_stock=[]
             for symbol in sp500_symbols:
                 stock=yf.Ticker(symbol)
                 try:
                     stock_info=stock.info
-                    pe_ratio = stock_info.get('trailingPE', None)
-                    pb_ratio = stock_info.get('trailingPB', None)
+                    #pe_ratio = stock_info.get('trailingPE', None)
+                    #pb_ratio = stock_info.get('trailingPB', None)
                     price = stock_info.get('regularMarketPrice', None)
-                    if (pe_ratio is not None and pb_ratio is not None and price is not None and
-                        min_pe_ratio <= pe_ratio <= max_pe_ratio and
-                        min_pb_ratio <= pb_ratio <= max_pb_ratio and
+                    if ( price is not None and
                         min_price <= price <= max_price):
-                        filtered_stock.append(stock_info)
+                        ddd=1
                 except Exception as e:
-                    pass
+                    filtered_stock.append(stock_info)
             return render(request,'screener.html', {'filtered_stock': filtered_stock})
     else:
         form=searchform()
@@ -155,4 +153,11 @@ def filterstocks(request):
        # 'analyst_recommendations': analyst_recommendations.to_html(),
    # }
    # return render(request, 'analyst_recommendations.html', context)
-   
+
+
+
+
+
+##################################
+def streamlit_page(request):
+    return render(request,'streamlit_page.html')   
