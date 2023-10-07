@@ -3,23 +3,32 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Login & Signup Form | CodingNepal</title>
+    <title>Login & Signup</title>
     <link rel="stylesheet" href=" {% static 'style.css' %}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
   <body>
-    {% if form.errors %}
+    {% if messages %}
           <div class="popup" id="popup" >
               <ul>
-                  {% for field in form %}
-                      {% if field.errors %}
-                          <li>{{ field.label }}: {{ field.errors|join:", " }}</li>
-                      {% endif %}
+                  {% for message in messages %}
+                          <li>{{message}}</li>
                   {% endfor %}
                   <button type="button" onclick="closePopup()">ok</button>
               </ul>
           </div>
       {% endif %}
+      {% if form.errors %}
+      <div class="popup" id="popup" >
+                <ul>{% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ field.label }}: {{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+                <button type="button" onclick="closePopup()">ok</button>
+            </ul>
+          </div> 
+        {% endif %}
     <div class="wrapper">
       <div class="title-text">
         <div class="title login">Login</div>
@@ -79,6 +88,11 @@
       const loginBtn = document.querySelector("label.login");
       const signupBtn = document.querySelector("label.signup");
       const signupLink = document.querySelector("form .signup-link a");
+      let popup=document.getElementById("popup");
+      function closePopup(){
+          popup.classList.add("open-popup")
+        }
+
       signupBtn.onclick = (()=>{
         loginForm.style.marginLeft = "-50%";
         loginText.style.marginLeft = "-50%";

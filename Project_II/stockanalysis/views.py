@@ -7,7 +7,7 @@ import pandas as pd
 import plotly.express as px
 from .forms import searchform
 import subprocess,os
-
+from django.contrib.auth.decorators import login_required
 
 
 
@@ -20,7 +20,9 @@ import subprocess,os
 # views.py
 import plotly.graph_objs as go
 
-def stock_chart_real(request):
+
+@login_required(login_url='index')
+def landing(request):
     symbol=None
     if request.method=='POST':
         symbol=request.POST.get('query')
@@ -88,10 +90,11 @@ def stock_chart_real(request):
              "traded_volume":traded_volume,
              "percentage_change":percentage_change,
              }
-    return render (request, "stock_chart_real.html", context)
+    return render (request, "landingpage.html", context)
 
 #############################################################
 #form ###
+@login_required(login_url='index')
 def filterstocks(request):
     if request.method =='POST':
         form=searchform(request.POST)
@@ -136,30 +139,15 @@ def filterstocks(request):
             'form':form,
         }  
             
-    return render(request,'filtered_stocks.html',content)
+    return render(request,'filter_stocks.html',content)
             
             
             
  
  
 #################################
+@login_required(login_url='index')
 def streamlit_page(request):
     return render(request,'streamlit_page.html')    
 
 
-
-# to run streamlit app from the same django project as a subprocess
-def stock_analysis_view(request):
-    if request.method == 'POST':
-        print("PAASS")
-        stock_name = request.POST.get('stock_name')
-        script_path = os.path.abspath('/stockanalysis/streamlit_app.py')
-        print(script_path)
-        if stock_name:
-            print(stock_name)
-            # Run the Streamlit app as a subprocess and pass the stock_name
-            subprocess.Popen(["streamlit", "run", script_path, stock_name])
-        else:
-            return render(request, 'stock_analysis_form.html', {'error_message': 'Invalid stock name'})
-    return render(request, 'stock_chart_real.html')
- 

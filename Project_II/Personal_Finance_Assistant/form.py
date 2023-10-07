@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm,PasswordChangeForm
 from django.contrib.auth.models import User
 from django import forms
 from .models import User_Info,IncomeRecord
@@ -94,3 +94,6 @@ class TransactionForm(forms.ModelForm):
         model = IncomeRecord # Replace 'Transaction' with your actual model name
         fields = ['title', 'amount', 'category', 'finance_type']
   
+class CustomPasswordChangeForm(PasswordChangeForm):
+    class Meta:
+        model = User
