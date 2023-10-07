@@ -7,6 +7,12 @@
 {% block page_name %}Portfolio{% endblock page_name %}
 
 {% block content %}
+<div class = 'container'>
+    <div class = 'income'>
+    <h1>{{ message }}</h1>
+    <h3>{{ amount }}</h3>
+</div>
+
     <table class="styled-table">
         <thead>
             <tr>
@@ -24,16 +30,13 @@
                 <td>{{ stock.stocksymbol }}</td>
                 <td>{{ stock.stockname }}</td>
                 <td>{{ stock.quantity }}</td>
-                <td>{{ stock.buy_price }}</td>
-                <td>{{ stock.current_price }}</td>
+                <td>${{ stock.buy_price }}</td>
+                <td>${{ stock.current_price }}</td>
                 <td>
                     <butto id = "btn7"><a href="{% url 'delete_portfolio' stock.pk %}">Delete</a> </button><!-- Link to delete view  income.pk is the primary key created by deafult-->
                 </td>
             </tr>
             {% endfor %}
-            <tr>
-                <td colspan="5">{{ message }}={{ amount }}</td>
-            </tr>
         </tbody>
     </table>
 

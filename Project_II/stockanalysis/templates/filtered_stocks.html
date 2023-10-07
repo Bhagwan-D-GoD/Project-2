@@ -1,5 +1,42 @@
 <!-- templates/filtered_stocks.html -->
 
+{% extends "base.html" %}
+{% load static %}
+{%block title %}
+<link rel="stylesheet" href= '{% static "stock_chart_real.css" %}'>
+<title>Filter Stocks</title>
+
+{% endblock title%}
+    
+{% block page_name %} Stock Screener
+
+{% endblock page_name %}
+
+{% block content %}
+<h1>Filter stocks</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+{% endblock content %}
+
+{% block script %}
+{% endblock script %}
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html>
 <head>

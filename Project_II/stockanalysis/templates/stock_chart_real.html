@@ -1,6 +1,89 @@
-<!-- templates/stocks/aapl_chart.html -->
 
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% load static %}
+{%block title %}
+<link rel="stylesheet" href= '{% static "stock_chart_real.css" %}'>
+<title>Analytics & Stock Chart</title>
+
+{% endblock title%}
+    
+{% block page_name %}Analytics
+
+{% endblock page_name %}
+
+{% block content %}
+
+<form method="post" action="{% url 'stockchart' %}">
+    {% csrf_token %}
+    <input type="text" name="query" id="searchstock" placeholder="Enter stock symbol">
+    <button type="submit">Search</button>
+</form>
+<h1>Market Summary</h1>
+    <table>
+        <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>S&P 500</td>
+            <td>{{ stockname }}</td>
+        </tr>
+        <tr>
+            <td>Current Price</td>
+            <td>{{ current_price }}</td>
+        </tr>
+        <tr>
+            <td>Previous Close</td>
+            <td>{{ previous_close }}</td>
+        </tr>
+        <tr>
+            <td>Change</td>
+            <td>{{ percentage_change }}%</td>
+        </tr>
+        <tr>
+            <td>Volume Traded</td>
+            <td>{{ traded_volume }}</td>
+        </tr>
+        <tr>
+            <td>High</td>
+            <td>{{ high_price }}</td>
+        </tr>
+        <tr>
+            <td>Low</td>
+            <td>{{ low_price }}</td>
+        </tr>
+    </table>
+    <h1>S&P 500 Index Chart</h1>
+    <div id="sp500-chart">
+        {{ plot_div2|safe }}
+    </div>
+    
+
+{% endblock content %}
+
+{% block script %}
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+{% endblock script %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -9,13 +92,40 @@
 </head>
 <body>
     <h1>Market Summary</h1>
-    <h2>S&P 500</h2>
-    <p>Current Price: {{ current_price }}</p>
-    <p>Previous Close:{{previous_close}}</p>
-    <p>Change:{{percentage_change}}%</p>
-    <p>Volume traded:{{traded_volume}}</p>
-    <p>High:{{high_price}}</p>
-    <p>Low:{{low_price}}</p>
+    <table>
+        <tr>
+            <th>Attribute</th>
+            <th>Value</th>
+        </tr>
+        <tr>
+            <td>S&P 500</td>
+            <td>{{ stockname }}</td>
+        </tr>
+        <tr>
+            <td>Current Price</td>
+            <td>{{ current_price }}</td>
+        </tr>
+        <tr>
+            <td>Previous Close</td>
+            <td>{{ previous_close }}</td>
+        </tr>
+        <tr>
+            <td>Change</td>
+            <td>{{ percentage_change }}%</td>
+        </tr>
+        <tr>
+            <td>Volume Traded</td>
+            <td>{{ traded_volume }}</td>
+        </tr>
+        <tr>
+            <td>High</td>
+            <td>{{ high_price }}</td>
+        </tr>
+        <tr>
+            <td>Low</td>
+            <td>{{ low_price }}</td>
+        </tr>
+    </table>
     <h1>S&P 500 Index Chart</h1>
     <div id="sp500-chart">
         {{ plot_div2|safe }}
@@ -24,12 +134,9 @@
         {% csrf_token %}
         <input type="text" name="query" id="searchstock" placeholder="Enter stock symbol">
         <button type="submit">Search</button>
-    <h1>{{stockname}} Stock Chart</h1>
-    <div id="aapl-chart">
-        {{ plot_div|safe }}
-    </div>
+    </form>
     <a href="{% url 'filterstocks' %}">
         <span class="links_name">SCREENER</span>
-      </a>
+    </a>
 </body>
-</html>
+</html> {% endcomment %}
